@@ -12,6 +12,29 @@ type MaterialTest() =
             meta [_name "description"; _content "My test case"]
         ]
         |> Renderer.Print
+    [<Case>]
+    static member Nav() =
+        let navLink url text =
+            a [_class Mat.Nav.Link; _href url] [
+                EncodedText text
+            ]
+
+        let navPart =
+            nav [_class Mat.Nav.Nav] [
+                navLink "index.html" "portfolio"
+                navLink "blog.html" "Blog"
+                navLink "about.html" "About"
+                navLink "contact.html" "Contact"
+            ]
+        // render separate nav for small and large screen
+
+        div [] [
+            div [_classes [Mat.Layout.LargeOnly; Mat.Layout.HeaderRow]] [navPart]
+            div [_class Mat.Layout.SmallOnly] [navPart]
+
+        ]
+        |> Renderer.Print
+
 
 type BasicTests() =
     [<Case>]
