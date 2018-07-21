@@ -13,4 +13,8 @@
     <ProjectReference Include="..\StaticSharp\StaticSharp.fsproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="TrivialTestRunner" Version="1.1.0" />
+  </ItemGroup>
+
 </Project>
