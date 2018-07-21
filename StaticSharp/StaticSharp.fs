@@ -2,10 +2,7 @@ namespace StaticSharp
 
 open System.IO
 open Giraffe
-
 open Giraffe.GiraffeViewEngine
-
-
 
 [<AutoOpen>]
 module ViewExtensions =
@@ -15,9 +12,10 @@ module ViewExtensions =
         |> _class
 
 
-
+// material design helpers
 module Mat =
-
+    module ShahowC =
+        let S4 = "mdl-shadow--4dp"
 
     module LayoutC =
         let Layout = "mdl-layout"
@@ -46,13 +44,26 @@ module Mat =
         let SupText = "mdl-card__supporting-text"
         let Actions = "mdl-card__actions"
         let Border = "mdl-card--border"
+
+    module Card =
+        let WithImage title imgSrc supText =
+            div [_classes [GridC.Cell; CardC.Card; ShahowC.S4 ]] [
+                div [_class CardC.Media] [
+                    img [_src imgSrc; _border "0"; _alt "" ]
+                ]
+                div [_class CardC.Title] [
+                    h2 [_class CardC.TitleText] [EncodedText title]
+                ]
+                div [_class CardC.SupText] [EncodedText supText]
+            ]
+
     module ButtonC =
         let Fancy = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent"
 
     module Button =
         let Link href text = a [_href href; _class ButtonC.Fancy] [ EncodedText text]
 
-    module Card =
+
 
     let Head (extraEnts: XmlNode list) =
         [

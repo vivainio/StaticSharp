@@ -1,7 +1,5 @@
 ﻿open TrivialTestRunner
 open StaticSharp
-open Giraffe.GiraffeViewEngine
-open System.Runtime.CompilerServices
 
 type MaterialTest() =
     [<Case>]

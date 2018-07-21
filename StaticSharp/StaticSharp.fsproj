@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <Compile Include="GiraffeViewEngine.fs"/>
-    <Compile Include="Library.fs" />
+    <Compile Include="StaticSharp.fs" />
 
   </ItemGroup>
 
