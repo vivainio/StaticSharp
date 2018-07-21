@@ -80,7 +80,7 @@ module Mat =
 
 module Renderer =
 
-    let filterProcess pname =
+    let internal filterProcess pname =
         let psi = ProcessStartInfo(pname)
         psi.RedirectStandardInput <- true
         psi.RedirectStandardOutput <- true
@@ -89,16 +89,13 @@ module Renderer =
         let p = Process.Start psi
         p.StandardInput, p.StandardOutput
 
-
-
-
     let WriteDoc fname nodes =
         let cont =
             nodes
             |> GiraffeViewEngine.renderHtmlDocument
         printfn "%s\n%s" fname cont
         File.WriteAllText(fname,cont)
-    let Print title node =
+    let PrettyPrint title node =
 
         let html =
             node

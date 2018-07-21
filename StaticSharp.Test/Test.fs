@@ -10,7 +10,7 @@ type MaterialTest() =
         Mat.Boilerplates.Roboto ::
         Mat.Boilerplates.BasicMeta
         |> head []
-        |> Renderer.Print "Header"
+        |> Renderer.PrettyPrint "Header"
     [<Case>]
     static member Nav() =
         let navLink url text =
@@ -32,14 +32,14 @@ type MaterialTest() =
             div [_class Mat.LayoutC.SmallOnly] [navPart]
 
         ]
-        |> Renderer.Print "Navigation"
+        |> Renderer.PrettyPrint "Navigation"
 
     [<Case>]
     static member Buttons() =
         div [] [
             Mat.Button.Link "nolink" "sometext"
         ]
-        |> Renderer.Print "Buttons"
+        |> Renderer.PrettyPrint "Buttons"
 
 
 [<EntryPoint>]
