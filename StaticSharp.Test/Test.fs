@@ -5,10 +5,12 @@ open Giraffe.GiraffeViewEngine
 type MaterialTest() =
     [<Case>]
     static member Header() =
-        Mat.Head [
-            meta [_name "description"; _content "My test case"]
-        ]
-        |> Renderer.Print
+
+        Mat.Boilerplates.MaterialCss ::
+        Mat.Boilerplates.Roboto ::
+        Mat.Boilerplates.BasicMeta
+        |> head []
+        |> Renderer.Print "Header"
     [<Case>]
     static member Nav() =
         let navLink url text =
@@ -30,14 +32,14 @@ type MaterialTest() =
             div [_class Mat.LayoutC.SmallOnly] [navPart]
 
         ]
-        |> Renderer.Print
+        |> Renderer.Print "Navigation"
 
     [<Case>]
     static member Buttons() =
         div [] [
             Mat.Button.Link "nolink" "sometext"
         ]
-        |> Renderer.Print
+        |> Renderer.Print "Buttons"
 
 
 [<EntryPoint>]

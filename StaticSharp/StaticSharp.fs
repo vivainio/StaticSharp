@@ -64,19 +64,17 @@ module Mat =
         let Link href text = a [_href href; _class ButtonC.Fancy] [ EncodedText text]
 
 
-
-    let Head (extraEnts: XmlNode list) =
-        [
-            meta [_charset "UTF-8"]
-
-            meta [_httpEquiv "X-UA-Compatible"; _content "IE=edge"]
-            meta [ _name "viewport"; _content "width=device-width, initial-scale=1.0, minimum-scale=1.0"]
+    module Boilerplates =
+        let BasicMeta =
+            [
+                meta [_charset "UTF-8"]
+                meta [_httpEquiv "X-UA-Compatible"; _content "IE=edge"]
+                meta [ _name "viewport"; _content "width=device-width, initial-scale=1.0, minimum-scale=1.0"]
+            ]
+        let Roboto =
             link [_rel "stylesheet"; _href "https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"]
+        let MaterialCss =
             link [_rel "stylesheet"; _href "https://code.getmdl.io/1.3.0/material.grey-pink.min.css"]
-            link [_rel "stylesheet"; _href "styles.css"]
-        ]
-        |> List.append extraEnts
-        |> head []
 
 
 module Renderer =
@@ -86,7 +84,8 @@ module Renderer =
             |> GiraffeViewEngine.renderHtmlDocument
         printfn "%s\n%s" fname cont
         File.WriteAllText(fname,cont)
-    let Print node =
+    let Print title node =
+        printfn "** %s **" title
         node
         |> GiraffeViewEngine.renderHtmlNode
         |> printfn "%s"
