@@ -37,11 +37,15 @@ type MaterialTest() =
     [<Case>]
     static member Buttons() =
         div [] [
-            Mat.Button.Link "nolink" "sometext"
+            Mat.Button.Link "nolink" "sometext" ++ _id "linkbutton"
         ]
         |> Renderer.PrettyPrint "Buttons"
-
-
+    [<Case>]
+    static member Cards() =
+        Mat.Card.WithImage "Card title" "mypic.jpg" "Some supplementary text"
+         ++ _id "mycard"
+         ++ _class "extraclass"
+        |> Renderer.PrettyPrint "Cards"
 [<EntryPoint>]
 let main argv =
     TRunner.AddTests<MaterialTest>()

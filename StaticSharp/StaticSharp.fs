@@ -12,6 +12,24 @@ module ViewExtensions =
         |> String.concat " "
         |> _class
 
+    // add new attributes to root
+
+
+    let addAttrs (attr: XmlAttribute[]) (node: XmlNode) =
+        match node with
+        | ParentNode((name, oldattrs), children) ->
+            let newEl = name,Array.concat [oldattrs; attr]
+            ParentNode(newEl, children)
+        | VoidElement(name, oldattrs) ->
+            let newEl = name,Array.concat [oldattrs; attr]
+            VoidElement(newEl)
+        | _ ->
+            failwithf "Can't add attribute to node %A" node
+
+
+    // operator to add attributes to node
+    let inline (++) (node: XmlNode) (attr: XmlAttribute) =
+        addAttrs [|attr|] node
 
 // material design helpers
 module Mat =
@@ -48,7 +66,8 @@ module Mat =
 
     module Card =
         let WithImage title imgSrc supText =
-            div [_classes [GridC.Cell; CardC.Card; ShahowC.S4 ]] [
+            let attrs = [_classes [GridC.Cell; CardC.Card; ShahowC.S4 ]]
+            div attrs  [
                 div [_class CardC.Media] [
                     img [_src imgSrc; _border "0"; _alt "" ]
                 ]
@@ -62,7 +81,8 @@ module Mat =
         let Fancy = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent"
 
     module Button =
-        let Link href text = a [_href href; _class ButtonC.Fancy] [ EncodedText text]
+        let Link href text =
+            a [_href href; _class ButtonC.Fancy] [ EncodedText text]
 
 
     module Boilerplates =
@@ -76,6 +96,8 @@ module Mat =
             link [_rel "stylesheet"; _href "https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"]
         let MaterialCss =
             link [_rel "stylesheet"; _href "https://code.getmdl.io/1.3.0/material.grey-pink.min.css"]
+
+
 
 
 module Renderer =
