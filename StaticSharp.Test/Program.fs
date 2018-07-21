@@ -8,9 +8,8 @@ open Giraffe.GiraffeViewEngine
 type MaterialTest() =
     [<Case>]
     static member Header() =
-        Mdl.Head [
+        Mat.Head [
             meta [_name "description"; _content "My test case"]
-
         ]
         |> Renderer.Print
 

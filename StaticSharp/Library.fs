@@ -3,7 +3,7 @@ namespace StaticSharp
 open System.IO
 open Giraffe
 
-module Mdl =
+module Mat =
     open Giraffe.GiraffeViewEngine
     let Head (extraEnts: XmlNode list) =
         [
