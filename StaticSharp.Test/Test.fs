@@ -40,18 +40,9 @@ type MaterialTest() =
         |> Renderer.Print
 
 
-type BasicTests() =
-    [<Case>]
-    static member Generate() =
-        let c = div [] []
-        Renderer.WriteDoc "testout.txt" c
-        ()
-
-
 [<EntryPoint>]
 let main argv =
     TRunner.AddTests<MaterialTest>()
-    TRunner.AddTests<BasicTests>()
 
     TRunner.RunTests()
     TRunner.ExitStatus
