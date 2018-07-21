@@ -3,6 +3,7 @@ namespace StaticSharp
 open System.IO
 open Giraffe
 open Giraffe.GiraffeViewEngine
+open System.Diagnostics
 
 [<AutoOpen>]
 module ViewExtensions =
@@ -78,6 +79,19 @@ module Mat =
 
 
 module Renderer =
+
+    let filterProcess pname =
+        let psi = ProcessStartInfo(pname)
+        psi.RedirectStandardInput <- true
+        psi.RedirectStandardOutput <- true
+        psi.CreateNoWindow <- true
+        psi.UseShellExecute <- false
+        let p = Process.Start psi
+        p.StandardInput, p.StandardOutput
+
+
+
+
     let WriteDoc fname nodes =
         let cont =
             nodes
@@ -85,7 +99,14 @@ module Renderer =
         printfn "%s\n%s" fname cont
         File.WriteAllText(fname,cont)
     let Print title node =
+
+        let html =
+            node
+            |> GiraffeViewEngine.renderHtmlNode
+
+        let input, output = filterProcess "formathtml.exe"
+        input.Write(html)
+        input.Close()
+        let cont = output.ReadToEnd()
         printfn "** %s **" title
-        node
-        |> GiraffeViewEngine.renderHtmlNode
-        |> printfn "%s"
+        printfn "%s" cont
