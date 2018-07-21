@@ -1,5 +1,6 @@
 ﻿open TrivialTestRunner
 open StaticSharp
+open Giraffe.GiraffeViewEngine
 
 type MaterialTest() =
     [<Case>]
