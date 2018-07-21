@@ -1,9 +1,7 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open System
-open TrivialTestRunner
+﻿open TrivialTestRunner
 open StaticSharp
 open Giraffe.GiraffeViewEngine
+open System.Runtime.CompilerServices
 
 type MaterialTest() =
     [<Case>]
@@ -15,12 +13,12 @@ type MaterialTest() =
     [<Case>]
     static member Nav() =
         let navLink url text =
-            a [_class Mat.Nav.Link; _href url] [
+            a [_class Mat.NavC.Link; _href url] [
                 EncodedText text
             ]
 
         let navPart =
-            nav [_class Mat.Nav.Nav] [
+            nav [_class Mat.NavC.Nav] [
                 navLink "index.html" "portfolio"
                 navLink "blog.html" "Blog"
                 navLink "about.html" "About"
@@ -29,9 +27,16 @@ type MaterialTest() =
         // render separate nav for small and large screen
 
         div [] [
-            div [_classes [Mat.Layout.LargeOnly; Mat.Layout.HeaderRow]] [navPart]
-            div [_class Mat.Layout.SmallOnly] [navPart]
+            div [_classes [Mat.LayoutC.LargeOnly; Mat.LayoutC.HeaderRow]] [navPart]
+            div [_class Mat.LayoutC.SmallOnly] [navPart]
 
+        ]
+        |> Renderer.Print
+
+    [<Case>]
+    static member Buttons() =
+        div [] [
+            Mat.Button.Link "nolink" "sometext"
         ]
         |> Renderer.Print
 

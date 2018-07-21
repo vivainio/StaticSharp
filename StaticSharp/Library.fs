@@ -19,7 +19,7 @@ module ViewExtensions =
 module Mat =
 
 
-    module Layout =
+    module LayoutC =
         let Layout = "mdl-layout"
         let Header = "mdl-layout__header"
         let HeaderWaterfall = "mdl-layout__header--waterfall"
@@ -30,15 +30,15 @@ module Mat =
         let Content = "mdl-layout__content"
 
 
-    module Nav =
+    module NavC =
         let Nav = "mdl-navigation"
         let Link = "mdl-navigation__link"
 
-    module Grid =
+    module GridC =
         let Grig = "mdl-grid"
         let Cell = "mdl-cell"
 
-    module Card =
+    module CardC =
         let Card = "mdl-card"
         let Media = "mdl-card__media"
         let Title = "mdl-card__title"
@@ -46,8 +46,13 @@ module Mat =
         let SupText = "mdl-card__supporting-text"
         let Actions = "mdl-card__actions"
         let Border = "mdl-card--border"
+    module ButtonC =
+        let Fancy = "mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect mdl-button--accent"
 
+    module Button =
+        let Link href text = a [_href href; _class ButtonC.Fancy] [ EncodedText text]
 
+    module Card =
 
     let Head (extraEnts: XmlNode list) =
         [
