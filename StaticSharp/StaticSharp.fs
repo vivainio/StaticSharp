@@ -32,7 +32,7 @@ module ViewExtensions =
         addAttrs [|attr|] node
 
 // material design helpers
-module Mat =
+module Mdl =
     module ShahowC =
         let S4 = "mdl-shadow--4dp"
 
@@ -43,8 +43,8 @@ module Mat =
         let HeaderRow = "mdl-layout__header-row"
         let LargeOnly = "mdl-layout--large-screen-only"
         let SmallOnly = "mdl-layout--small-screen-only"
-
         let Content = "mdl-layout__content"
+        let Title = "mdl-layout__title"
 
 
     module NavC =
