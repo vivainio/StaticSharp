@@ -46,6 +46,37 @@ type MaterialTest() =
          ++ _id "mycard"
          ++ _class "extraclass"
         |> Renderer.PrettyPrint "Cards"
+    [<Case>]
+    static member FullPortfolio() =
+        let headerElement =
+            Mat.Boilerplates.MaterialCss ::
+            Mat.Boilerplates.Roboto ::
+            Mat.Boilerplates.MaterialIcons ::
+            Mat.Boilerplates.BasicMeta
+            |>
+            head []
+
+        Renderer.PrettyPrint "Head element" headerElement
+        let pageHeader =
+
+            header [_classes [Mat.LayoutC.Header; Mat.LayoutC.HeaderWaterfall; "portfolio-header"]] [
+                div [_classes [ Mat.LayoutC.HeaderRow; "portfolio-logo-row"]] [
+                    span [_class Mat.LayoutC.Title ] []
+                    div [_class "portfolio-logo"] []
+                    span [_class Mat.LayoutC.Title ] [EncodedText "Simple portfolio website"]
+                ]
+
+                div [_classes [
+                                Mat.LayoutC.HeaderRow
+                                "portfolio-navigation-row"
+                                Mat.LayoutC.LargeOnly
+                              ]] [
+
+                ]
+
+            ]
+        ()
+
 [<EntryPoint>]
 let main argv =
     TRunner.AddTests<MaterialTest>()

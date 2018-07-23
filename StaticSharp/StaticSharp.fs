@@ -96,6 +96,8 @@ module Mat =
             link [_rel "stylesheet"; _href "https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en"]
         let MaterialCss =
             link [_rel "stylesheet"; _href "https://code.getmdl.io/1.3.0/material.grey-pink.min.css"]
+        let MaterialIcons =
+            link [_rel "stylesheet"; _href "https://fonts.googleapis.com/icon?family=Material+Icons"]
 
 
 
