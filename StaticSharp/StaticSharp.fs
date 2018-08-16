@@ -14,7 +14,6 @@ module ViewExtensions =
 
     // add new attributes to root
 
-
     let addAttrs (attr: XmlAttribute[]) (node: XmlNode) =
         match node with
         | ParentNode((name, oldattrs), children) ->
@@ -30,6 +29,7 @@ module ViewExtensions =
     // operator to add attributes to node
     let inline (++) (node: XmlNode) (attr: XmlAttribute) =
         addAttrs [|attr|] node
+
 
 // material design helpers
 module Mdl =
@@ -101,9 +101,24 @@ module Mdl =
 
 
 
+module C =
+    type Css = Css of string
+
+    let Of frags =
+        (frags: Css seq)
+        |> Seq.map (fun (Css s) -> s)
+        |> String.concat "; "
+        |> _style
+
+    module Flex =
+        let Flex = Css "display: flex"
+        module Align =
+            let SpaceBetween = Css "align-content: space-between"
+            let Start = Css "align-content: flex-start"
+            let End = Css "align-content: flex-start"
+
 
 module Renderer =
-
     let internal filterProcess pname =
         let psi = ProcessStartInfo(pname)
         psi.RedirectStandardInput <- true
@@ -112,13 +127,20 @@ module Renderer =
         psi.UseShellExecute <- false
         let p = Process.Start psi
         p.StandardInput, p.StandardOutput
+    let FormatHtml (html: string) =
+        let input, output = filterProcess "formathtml.exe"
+        input.Write(html)
+        input.Close()
+        output.ReadToEnd()
 
     let WriteDoc fname nodes =
         let cont =
             nodes
             |> GiraffeViewEngine.renderHtmlDocument
-        printfn "%s\n%s" fname cont
-        File.WriteAllText(fname,cont)
+
+        let formatted = FormatHtml cont
+        File.WriteAllText(fname,formatted)
+
     let PrettyPrint title node =
 
         let html =

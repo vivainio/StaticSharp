@@ -1,6 +1,7 @@
 ﻿open TrivialTestRunner
 open StaticSharp
 open Giraffe.GiraffeViewEngine
+open StaticSharp.C
 
 type MaterialLiteTest() =
     [<Case>]
@@ -77,8 +78,29 @@ type MaterialLiteTest() =
 
             ]
         ()
+    [<Case>]
+    static member AddClass() =
+        // phase 2 merge classes
+        let c = div [_class "hello"] []
+        let b = c ++ _class "world"
+        Renderer.PrettyPrint "two classes" b
 
-module MaterialTest =
+        printfn "%A" b
+        ()
+    [<Case>]
+    static member InlineStyles() =
+        let plain = div [][]
+        let styled =
+            plain
+            ++ _style "display:flex"
+
+        let styled2 =
+            div [] []
+            ++ C.Of [C.Flex.Align.SpaceBetween]
+
+        Renderer.PrettyPrint "inline style" styled2
+
+        ()
 
 
 
@@ -87,4 +109,5 @@ let main argv =
     TRunner.AddTests<MaterialLiteTest>()
 
     TRunner.RunTests()
+    TRunner.ReportAll()
     TRunner.ExitStatus
