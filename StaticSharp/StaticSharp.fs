@@ -116,7 +116,10 @@ module C =
             let SpaceBetween = Css "align-content: space-between"
             let Start = Css "align-content: flex-start"
             let End = Css "align-content: flex-start"
-
+    module Text =
+        module Align =
+            let Center = Css "text-align: center"
+    let Width w = sprintf "width: %s" w |> Css
 
 module Renderer =
     let internal filterProcess pname =
