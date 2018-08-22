@@ -112,6 +112,9 @@ module C =
 
     module Flex =
         let Flex = Css "display: flex"
+        module Wrap =
+            let Wrap = Css "flex-wrap: wrap"
+            let No = Css "flex-wrap: nowrap"
         module Align =
             let SpaceBetween = Css "align-content: space-between"
             let Start = Css "align-content: flex-start"
@@ -120,6 +123,12 @@ module C =
         module Align =
             let Center = Css "text-align: center"
     let Width w = sprintf "width: %s" w |> Css
+    let MarginTRBL w = sprintf "margin: %s" w |> Css
+
+    module Font =
+        let Size sz = sprintf "font-size: %s" sz |> Css
+        let Bold = Css "font-weight: bold"
+
 
 module Renderer =
     let internal filterProcess pname =
