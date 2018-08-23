@@ -3,6 +3,9 @@ open StaticSharp
 open Giraffe.GiraffeViewEngine
 open StaticSharp.C
 
+open StyleDefs
+
+
 type MaterialLiteTest() =
     [<Case>]
     static member Header() =
@@ -72,7 +75,8 @@ type MaterialLiteTest() =
                         Mdl.LayoutC.HeaderRow
                         "portfolio-navigation-row"
                         Mdl.LayoutC.LargeOnly
-                    ]] [
+                    ]
+                ] [
 
                 ]
 
@@ -102,6 +106,16 @@ type MaterialLiteTest() =
 
         ()
 
+    [<Case>]
+    static member Bem() =
+        let b = StyleDefs.Bem "rootblock"
+        let c = b?a
+        let coll = StyleDefs.Collector()
+        let draw = coll.Class b?one [
+            C.Width "100px"
+            C.Text.Align.Center
+        ]
+        printf "%s" (coll.AsScript())
 
 
 [<EntryPoint>]

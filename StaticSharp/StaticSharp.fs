@@ -103,6 +103,12 @@ module Mdl =
 
 module C =
     type Css = Css of string
+    module Util =
+        let Pretty (parts: Css seq) =
+            parts
+            |> Seq.map (fun (Css s) -> sprintf "  %s;" s)
+            |> String.concat "\n"
+            |> fun s -> s+"\n"
 
     let Of frags =
         (frags: Css seq)
@@ -128,6 +134,31 @@ module C =
     module Font =
         let Size sz = sprintf "font-size: %s" sz |> Css
         let Bold = Css "font-weight: bold"
+
+module StyleDefs =
+    type Bem = Bem of string
+    type ClassName = ClassName of string
+
+    let (?) (Bem(block)) (el:string) =
+        sprintf "%s--%s" block el |> ClassName
+
+    type Rule = {selector: string; body: string }
+    type RuleSet = Rule[]
+
+    type Collector() =
+        let rules = ResizeArray<Rule>()
+        member x.Class (klass: ClassName) (block: C.Css seq) =
+            let (ClassName kl) = klass
+            rules.Add { selector = ".klass"; body = C.Util.Pretty block }
+            kl
+        member x.AsScript() =
+            rules
+            |> Seq.map (fun r -> sprintf "%s {\n%s}\n" r.selector r.body)
+            |> String.concat "\n"
+
+
+
+
 
 
 module Renderer =
