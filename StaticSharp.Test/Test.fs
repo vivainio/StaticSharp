@@ -76,10 +76,7 @@ type MaterialLiteTest() =
                         "portfolio-navigation-row"
                         Mdl.LayoutC.LargeOnly
                     ]
-                ] [
-
-                ]
-
+                ] []
             ]
         ()
     [<Case>]
@@ -111,11 +108,12 @@ type MaterialLiteTest() =
         let b = StyleDefs.Bem "rootblock"
         let c = b?a
         let coll = StyleDefs.Collector()
-        let draw = coll.Class b?one [
-            C.Width "100px"
-            C.Text.Align.Center
-        ]
-        printf "%s" (coll.AsScript())
+        let draw =
+            coll.Class b?one [
+                C.Width "100px"
+                C.Text.Align.Center
+            ]
+        printf "%s" (coll.AsText())
 
 
 [<EntryPoint>]

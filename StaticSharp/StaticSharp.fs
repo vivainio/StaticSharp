@@ -149,15 +149,12 @@ module StyleDefs =
         let rules = ResizeArray<Rule>()
         member x.Class (klass: ClassName) (block: C.Css seq) =
             let (ClassName kl) = klass
-            rules.Add { selector = ".klass"; body = C.Util.Pretty block }
+            rules.Add { selector = "." + kl; body = C.Util.Pretty block }
             kl
-        member x.AsScript() =
+        member x.AsText() =
             rules
             |> Seq.map (fun r -> sprintf "%s {\n%s}\n" r.selector r.body)
             |> String.concat "\n"
-
-
-
 
 
 
