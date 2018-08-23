@@ -128,6 +128,9 @@ module C =
     module Text =
         module Align =
             let Center = Css "text-align: center"
+            let Left = Css "text-align: left"
+            let Right = Css "text-align: right"
+
     let Width w = sprintf "width: %s" w |> Css
     let MarginTRBL w = sprintf "margin: %s" w |> Css
 
@@ -147,11 +150,18 @@ module StyleDefs =
 
     type Collector() =
         let rules = ResizeArray<Rule>()
+        let mutable locked = false
+
+        let write rule =
+            if locked then failwith "Attempt to modify written css collector"
+            rules.Add rule
+
         member x.Class (klass: ClassName) (block: C.Css seq) =
             let (ClassName kl) = klass
-            rules.Add { selector = "." + kl; body = C.Util.Pretty block }
+            write { selector = "." + kl; body = C.Util.Pretty block }
             kl
         member x.AsText() =
+            locked <- true
             rules
             |> Seq.map (fun r -> sprintf "%s {\n%s}\n" r.selector r.body)
             |> String.concat "\n"

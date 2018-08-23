@@ -108,10 +108,15 @@ type MaterialLiteTest() =
         let b = StyleDefs.Bem "rootblock"
         let c = b?a
         let coll = StyleDefs.Collector()
-        let draw =
+        let one =
             coll.Class b?one [
                 C.Width "100px"
                 C.Text.Align.Center
+            ]
+        let two =
+            coll.Class b?two [
+                C.Width "20px"
+                C.Text.Align.Right
             ]
         printf "%s" (coll.AsText())
 
