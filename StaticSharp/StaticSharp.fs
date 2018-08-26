@@ -1,4 +1,4 @@
-namespace StaticSharp
+    namespace StaticSharp
 
 open System.IO
 open Giraffe
@@ -110,6 +110,10 @@ module C =
             |> String.concat "\n"
             |> fun s -> s+"\n"
 
+    let propFn (key: string) (value:string) = sprintf "%s: %s" key value |> Css
+
+
+    let Color = propFn "color"
     let Of frags =
         (frags: Css seq)
         |> Seq.map (fun (Css s) -> s)
@@ -126,17 +130,25 @@ module C =
             let Start = Css "align-content: flex-start"
             let End = Css "align-content: flex-start"
     module Text =
+
         module Align =
             let Center = Css "text-align: center"
             let Left = Css "text-align: left"
             let Right = Css "text-align: right"
 
-    let Width w = sprintf "width: %s" w |> Css
-    let MarginTRBL w = sprintf "margin: %s" w |> Css
+
+    let Width = propFn "width"
+    let Height = propFn "height"
+
+
+    let MarginTRBL = propFn "margin"
 
     module Font =
-        let Size sz = sprintf "font-size: %s" sz |> Css
+        let Size = propFn "font-size"
         let Bold = Css "font-weight: bold"
+        let LineHeight = propFn "line-height"
+        let Weight = propFn "font-weight"
+
 
 module StyleDefs =
     type Bem = Bem of string
