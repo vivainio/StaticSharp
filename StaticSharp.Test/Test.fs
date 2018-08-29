@@ -120,6 +120,23 @@ type StaticSharpTests() =
             ]
         printf "%s" (coll.AsText())
 
+    [<fCase>]
+    static member ChildNodes() =
+        let many ns = ManyNodes ns
+
+        // the two divs are at same level as spans
+        let all =
+            div [] [
+                span [][]
+                many [
+                    div[] []
+                    div[] []
+                ]
+                span [][]
+            ]
+        Renderer.PrettyPrint "ManyNodes" all
+
+
 
 [<EntryPoint>]
 let main argv =

@@ -37,6 +37,7 @@ type XmlNode =
     | VoidElement of XmlElement                // An XML element which cannot contain nested XML (e.g. <hr /> or <br />)
     | EncodedText of string                    // XML encoded text content
     | RawText     of string                    // Raw text content
+    | ManyNodes of XmlNode list
 
 // ---------------------------
 // Building blocks
@@ -340,11 +341,16 @@ let rec private nodeToString (htmlStyle : bool) (node : XmlNode) =
         let endTag       = elem  |> endElementToString
         sprintf "%s%s%s" startTag innerContent endTag
 
+    let childNodesToString (nodes : XmlNode list) =
+        let innerContent = nodes |> List.map (nodeToString htmlStyle) |> String.Concat
+        innerContent
+
     match node with
     | EncodedText text      -> WebUtility.HtmlEncode text
     | RawText text          -> text
     | ParentNode (e, nodes) -> parentNodeToString (e, nodes)
     | VoidElement e         -> startElementToString true e
+    | ManyNodes nodes       -> childNodesToString nodes
 
 let renderXmlNode = nodeToString false
 

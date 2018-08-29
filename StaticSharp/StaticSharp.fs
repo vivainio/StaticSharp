@@ -122,6 +122,10 @@ module C =
         |> String.concat "; "
         |> _style
 
+
+    module Pos =
+        let Absolute = Css "position: absolute"
+
     module Float =
         let Left = Css "float: left"
         let Right = Css "float: right"
@@ -150,7 +154,7 @@ module C =
     let Height = propFn "height"
     module Border =
         let Radius = propFn "border-radius"
-
+    let ZIndex = propFn "z-index"
 
     let MarginTRBL = propFn "margin"
 
