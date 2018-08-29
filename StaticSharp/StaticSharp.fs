@@ -1,4 +1,4 @@
-    namespace StaticSharp
+namespace StaticSharp
 
 open System.IO
 open Giraffe
@@ -200,11 +200,17 @@ module Renderer =
         psi.UseShellExecute <- false
         let p = Process.Start psi
         p.StandardInput, p.StandardOutput
+
     let FormatHtml (html: string) =
-        let input, output = filterProcess "formathtml.exe"
-        input.Write(html)
-        input.Close()
-        output.ReadToEnd()
+        try
+            let input, output = filterProcess "formathtml.exe"
+            input.Write(html)
+            input.Close()
+            output.ReadToEnd()
+        with
+        | :? System.ComponentModel.Win32Exception as ex ->
+            // yeah, silently ignoring lack of formathtml.exe & not formatting for now
+            html
 
     let WriteDoc fname nodes =
         let cont =
@@ -215,14 +221,7 @@ module Renderer =
         File.WriteAllText(fname,formatted)
 
     let PrettyPrint title node =
-
-        let html =
-            node
-            |> GiraffeViewEngine.renderHtmlNode
-
-        let input, output = filterProcess "formathtml.exe"
-        input.Write(html)
-        input.Close()
-        let cont = output.ReadToEnd()
-        printfn "** %s **" title
-        printfn "%s" cont
+        node
+        |> GiraffeViewEngine.renderHtmlNode
+        |> FormatHtml
+        |> printfn "%s"

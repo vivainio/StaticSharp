@@ -6,7 +6,7 @@ open StaticSharp.C
 open StyleDefs
 
 
-type MaterialLiteTest() =
+type StaticSharpTests() =
     [<Case>]
     static member Header() =
 
@@ -123,8 +123,7 @@ type MaterialLiteTest() =
 
 [<EntryPoint>]
 let main argv =
-    TRunner.AddTests<MaterialLiteTest>()
-
+    TRunner.AddTests<StaticSharpTests>()
     TRunner.RunTests()
     TRunner.ReportAll()
     TRunner.ExitStatus
