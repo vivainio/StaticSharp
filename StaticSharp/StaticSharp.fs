@@ -114,14 +114,23 @@ module C =
 
 
     let Color = propFn "color"
+    let ColorBg = propFn "background-color"
+
     let Of frags =
         (frags: Css seq)
         |> Seq.map (fun (Css s) -> s)
         |> String.concat "; "
         |> _style
 
+    module Float =
+        let Left = Css "float: left"
+        let Right = Css "float: right"
+    module Clear =
+        let Both = Css "clear: both"
+
     module Flex =
         let Flex = Css "display: flex"
+        let Direction = propFn "flex-direction"
         module Wrap =
             let Wrap = Css "flex-wrap: wrap"
             let No = Css "flex-wrap: nowrap"
@@ -139,6 +148,8 @@ module C =
 
     let Width = propFn "width"
     let Height = propFn "height"
+    module Border =
+        let Radius = propFn "border-radius"
 
 
     let MarginTRBL = propFn "margin"
